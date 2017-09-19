@@ -1,27 +1,32 @@
 package com.aveteam.lorienzo9.istudy;
 
-import android.icu.util.Calendar;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
+
+import com.aveteam.lorienzo9.istudy.ViewPagerAdapters.ViewPagerAdapter;
 
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private Date date;
     private TextView numberdate;
+    private ViewPager viewpager;
+
+    //Combino il movimento di un verticalviewpager con quello di un normale viewpager
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.view_pager);
 
-        date = java.util.Calendar.getInstance().getTime();
-        int number = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_MONTH);
+        viewpager = (ViewPager)findViewById(R.id.horizontal_viewpager);
 
-        numberdate = (TextView)findViewById(R.id.number_day);
-        numberdate.setText(String.valueOf(number));
-        Log.d("day", String.valueOf(number));
+        viewpager.setAdapter(new ViewPagerAdapter(3, getSupportFragmentManager()));
+        viewpager.setCurrentItem(1);
+
+
     }
+
 }
