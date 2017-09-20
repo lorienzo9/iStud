@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.aveteam.lorienzo9.istudy.Pages.MainFragment;
+import com.aveteam.lorienzo9.istudy.Pages.ToDo;
 
 /**
  * Created by lorienzo9 on 19/09/17.
@@ -23,7 +24,7 @@ public class VerticalViewPagerAdapter extends FragmentStatePagerAdapter {
         switch (position){
             case 0: return new MainFragment();
             case 1: return new MainFragment();
-            case 2: return new MainFragment();
+            case 2: return new ToDo();
         }
         return null;
     }

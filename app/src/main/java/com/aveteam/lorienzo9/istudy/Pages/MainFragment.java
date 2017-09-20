@@ -21,11 +21,16 @@ import java.util.Date;
 public class MainFragment extends android.support.v4.app.Fragment {
     private Date date;
     private TextView numberdate, monthdate, daydate;
+    public String months[] = {
+            "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+    };
+    public String days[]={
+            "Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"
+    };
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, container, false);
-
         View included_layout = view.findViewById(R.id.date_layout);
 
         date = java.util.Calendar.getInstance().getTime();
@@ -33,16 +38,8 @@ public class MainFragment extends android.support.v4.app.Fragment {
         int month = Calendar.getInstance().get(Calendar.MONTH);
         int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 
-        String months[] = {
-                "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
-        };
-        String days[]={
-                "Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"
-        };
+        setup(included_layout);
 
-        numberdate = (TextView)included_layout.findViewById(R.id.number_day);
-        monthdate = (TextView)included_layout.findViewById(R.id.month);
-        daydate = (TextView)included_layout.findViewById(R.id.day);
         numberdate.setText(String.valueOf(number));
         monthdate.setText(String.valueOf(months[month]));
         daydate.setText(String.valueOf(days[day]));
@@ -50,4 +47,10 @@ public class MainFragment extends android.support.v4.app.Fragment {
 
         return view;
     }
+    public void setup(View included_layout){
+        numberdate = (TextView)included_layout.findViewById(R.id.number_day);
+        monthdate = (TextView)included_layout.findViewById(R.id.month);
+        daydate = (TextView)included_layout.findViewById(R.id.day);
+    }
+
 }
