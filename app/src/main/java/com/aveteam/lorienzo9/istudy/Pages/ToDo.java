@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aveteam.lorienzo9.istudy.Homeworks;
 import com.aveteam.lorienzo9.istudy.R;
+import com.aveteam.lorienzo9.istudy.RecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,10 +31,17 @@ public class ToDo extends Fragment {
     TabLayout.Tab day1, day2, day3, day4;
     Calendar date;
     int datetry;
+    private ArrayList<Homeworks> list = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.todo, container, false);
+
+        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        list.add(new Homeworks("titolo", "descrizione", 0));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(new RecyclerViewAdapter(getContext(), list));
 
         tabLayout = (TabLayout)view.findViewById(R.id.tabLayout);
         day1 = tabLayout.newTab().setText(day(1));
