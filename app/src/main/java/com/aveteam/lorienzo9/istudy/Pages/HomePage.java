@@ -3,8 +3,10 @@ package com.aveteam.lorienzo9.istudy.Pages;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,13 +45,14 @@ public class HomePage extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.todo, container, false);
+        View view = inflater.inflate(R.layout.home_collapsed, container, false);
+        
 
-        calendarView = (CalendarView)view.findViewById(R.id.calendarView);
+        calendarView = (CalendarView) view.findViewById(R.id.calendar);
         calendarView.setFirstDayOfWeek(2);
         adapter = new RecyclerViewAdapter(getContext(), list);
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_homeworks);
+        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_collapsed);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);

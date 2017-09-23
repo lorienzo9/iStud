@@ -14,8 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView numberdate;
     private ViewPager viewpager;
 
-    //Combino il movimento di un verticalviewpager con quello di un normale viewpager
-
+    //Aggiungere Tabs
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
