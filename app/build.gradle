@@ -32,4 +32,8 @@ dependencies {
     compile 'com.android.support:design:26.+'
 
 
+    compile 'com.android.volley:volley:1.0.0'
+
+
+
 }

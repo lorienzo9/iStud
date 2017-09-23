@@ -7,12 +7,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.CalendarView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -28,16 +26,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
- * Created by lorienzo9 on 20/09/17.
+ * Created by lorienzo9 on 23/09/17.
  */
 
-public class ToDo extends Fragment {
+public class HomePage extends Fragment{
     private RecyclerView recyclerView;
-    private TabLayout tabLayout;
-    TabLayout.Tab day1, day2, day3, day4;
+    private CalendarView calendarView;
     Calendar date;
     int datetry;
     RecyclerViewAdapter adapter;
@@ -49,43 +45,14 @@ public class ToDo extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.todo, container, false);
 
+        calendarView = (CalendarView)view.findViewById(R.id.calendarView);
+        calendarView.setFirstDayOfWeek(2);
         adapter = new RecyclerViewAdapter(getContext(), list);
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_homeworks);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        list.add(new Homeworks("titolo", "descrizione", 0));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-
-        tabLayout = (TabLayout)view.findViewById(R.id.tabLayout);
-        day1 = tabLayout.newTab().setText(day(1));
-        tabLayout.addTab(day1);
-
-        day2 = tabLayout.newTab().setText(day(2));
-        tabLayout.addTab(day2);
-
-        day3 = tabLayout.newTab().setText(day(3));
-        tabLayout.addTab(day3);
-
-        day4 = tabLayout.newTab().setText(day(4));
-        tabLayout.addTab(day4);
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                //Aggiorno la recyclerView
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
         new LoadRecycler().execute();
 
@@ -127,7 +94,7 @@ public class ToDo extends Fragment {
         });
         AppController.getInstance().addToRequestQueue(request);
     }
-    private class LoadRecycler extends AsyncTask<String, Void, String>{
+    private class LoadRecycler extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();

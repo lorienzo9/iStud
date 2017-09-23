@@ -4,8 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.aveteam.lorienzo9.istudy.Pages.CentralFragment;
+import com.aveteam.lorienzo9.istudy.Pages.HomePage;
 import com.aveteam.lorienzo9.istudy.Pages.MainFragment;
+import com.aveteam.lorienzo9.istudy.Pages.ToDo;
 
 /**
  * Created by lorienzo9 on 19/09/17.
@@ -23,7 +24,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0: return new MainFragment();
-            case 1: return new CentralFragment();
+            case 1: return new HomePage();
             case 2: return new MainFragment();
         }
         return null;

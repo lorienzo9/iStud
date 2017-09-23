@@ -8,6 +8,9 @@ public class Homeworks {
     String titolo, descrizione;
     int TAG;
 
+    public Homeworks(){
+    }
+
     public Homeworks(String titolo, String descrizione, int TAG){
         this.descrizione = descrizione;
         this.titolo = titolo;
