@@ -46,10 +46,11 @@ public class HomePage extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_collapsed, container, false);
-        
+
 
         calendarView = (CalendarView) view.findViewById(R.id.calendar);
         calendarView.setFirstDayOfWeek(2);
+
         adapter = new RecyclerViewAdapter(getContext(), list);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_collapsed);
