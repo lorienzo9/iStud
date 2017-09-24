@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "570469361647",
+    "firebase_url": "https://istudy-8e9ec.firebaseio.com",
+    "project_id": "istudy-8e9ec",
+    "storage_bucket": "istudy-8e9ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570469361647:android:89b577d14a82682b",
+        "android_client_info": {
+          "package_name": "com.aveteam.lorienzo9.istudy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570469361647-hvm6e6hbcqbm1tvqu3gsgapsroajo60a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB284Ngr6P8TLH9up_-ueBZzblzyoWiv2c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
