@@ -1,10 +1,12 @@
 package com.aveteam.lorienzo9.istudy;
 
 import android.content.Context;
+import android.support.constraint.solver.SolverVariable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,8 +46,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView titolo, descrizione;
         ImageView dot;
+        EditText editText;
+        boolean isFocusable = false;
+        View v;
         public ViewHolder(View view){
             super(view);
+            editText = (EditText)view.findViewById(R.id.editText2);
             titolo = (TextView)view.findViewById(R.id.titolo);
             descrizione = (TextView)view.findViewById(R.id.Text_info);
             dot = (ImageView)view.findViewById(R.id.imageView2);

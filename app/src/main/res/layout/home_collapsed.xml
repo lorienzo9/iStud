@@ -11,27 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways">
 
             <CalendarView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/calendar"
                 android:layout_marginTop="72dp"
-                android:theme="@style/Theme.AppCompat">
+                android:theme="@style/Theme.AppCompat"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
             </CalendarView>
             <Toolbar
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:id="@+id/toolbar"
             app:layout_collapseMode="none">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_Toolbar"
+                    android:text="Toolbar"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:textColor="@color/cardview_light_background"/>
         </Toolbar>
-        </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

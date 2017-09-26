@@ -2,6 +2,7 @@ package com.aveteam.lorienzo9.istudy;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,12 +28,12 @@ public class LoginActivity extends AppCompatActivity {
     String email, password;
     private SharedPreferences sharedPreferences;
     final static String prefEmail = "prefEmail";
+    private Typeface typeface;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
-
         firebaseAuth = FirebaseAuth.getInstance(); //Inizializzo Firebase
 
 

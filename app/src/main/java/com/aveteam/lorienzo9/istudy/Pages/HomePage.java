@@ -1,5 +1,6 @@
 package com.aveteam.lorienzo9.istudy.Pages;
 
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -54,7 +55,12 @@ public class HomePage extends Fragment{
         adapter = new RecyclerViewAdapter(getContext(), list);
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_collapsed);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()){
+            @Override
+            public boolean requestChildRectangleOnScreen(RecyclerView parent, View child, Rect rect, boolean immediate) {
+                return super.requestChildRectangleOnScreen(parent, child, rect, immediate);
+            }
+        });
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 

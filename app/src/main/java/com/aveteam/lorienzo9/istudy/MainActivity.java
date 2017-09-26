@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity{
         viewpager.setCurrentItem(1);
 
         tabLayout = (TabLayout)findViewById(R.id.tab);
-        chat = tabLayout.newTab().setIcon(R.drawable.pois);
-        main = tabLayout.newTab().setIcon(R.drawable.pois);
-        other = tabLayout.newTab().setIcon(R.drawable.pois);
+        chat = tabLayout.newTab().setIcon(R.drawable.ic_chat_black_24dp);
+        main = tabLayout.newTab().setIcon(R.drawable.ic_home_black_24dp);
+        other = tabLayout.newTab().setIcon(R.drawable.ic_public_black_24dp);
 
         tabLayout.addTab(chat, 0);
         tabLayout.addTab(main, 1);
