@@ -1,6 +1,7 @@
 package com.aveteam.lorienzo9.istudy;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,26 +25,56 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     FirebaseAuth firebaseAuth;
     String email, password;
+    private SharedPreferences sharedPreferences;
+    final static String prefEmail = "prefEmail";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance(); //Inizializzo Firebase
+
 
         emailText = (EditText)findViewById(R.id.editText);
         passwordText = (EditText)findViewById(R.id.editText3);
         login = (Button)findViewById(R.id.button2);
 
-        login.setOnClickListener(new View.OnClickListener() {
+
+        if(readSharedPreferences()!=null){ //Verifico SP
+            emailText.setText(readSharedPreferences());
+        }else{ //Molto opzionale
+            Toast.makeText(getApplicationContext(), "Inserisci le tue credenziali", Toast.LENGTH_LONG).show();
+        }
+
+
+        login.setOnClickListener(new View.OnClickListener() { //E' il click sul bottone: prima autentica, poi salva le SP
             @Override
             public void onClick(View view) {
                 authenicate();
+                if (readSharedPreferences()==null){
+                    WriteStringPreferences(email);
+                }
             }
         });
     }
-    public void authenicate(){
+
+
+    public String readSharedPreferences(){  //Legge dalle SP con tag prefEmail e prende solo la stringa "email"
+        sharedPreferences = getSharedPreferences(prefEmail, MODE_PRIVATE);
+        return sharedPreferences.getString("email", null);
+    }
+
+
+    public void WriteStringPreferences(String email){ //Scrive le SP con tag prefEmail aggiungendo al string "email"
+        sharedPreferences = getSharedPreferences(prefEmail, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("email", email);
+        editor.commit();
+    }
+
+
+    public void authenicate(){  //Permette l'autenticazione login con firebase
         email = emailText.getText().toString().trim();
         password = passwordText.getText().toString().trim();
 
