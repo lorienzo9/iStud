@@ -22,6 +22,7 @@ import com.aveteam.lorienzo9.istudy.AppController;
 import com.aveteam.lorienzo9.istudy.Homeworks;
 import com.aveteam.lorienzo9.istudy.R;
 import com.aveteam.lorienzo9.istudy.RecyclerViewAdapter;
+import com.aveteam.lorienzo9.istudy.RecylerDayAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,29 +41,39 @@ public class HomePage extends Fragment{
     Calendar date;
     int datetry;
     RecyclerViewAdapter adapter;
+    RecyclerView days;
+    ArrayList<String> listday = new ArrayList<>();
     private ArrayList<Homeworks> list = new ArrayList<>();
 
     final static String URL = "http://aveteamdev.altervista.org/AveProject/exercise.json";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.home_collapsed, container, false);
+        View view = inflater.inflate(R.layout.home_collappsed_3days, container, false);
 
 
-        calendarView = (CalendarView) view.findViewById(R.id.calendar);
-        calendarView.setFirstDayOfWeek(2);
+        /*calendarView = (CalendarView) view.findViewById(R.id.calendar);
+        calendarView.setFirstDayOfWeek(2);*/
 
         adapter = new RecyclerViewAdapter(getContext(), list);
-
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_collapsed);
+        days = (RecyclerView)view.findViewById(R.id.recycler3days);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()){
             @Override
             public boolean requestChildRectangleOnScreen(RecyclerView parent, View child, Rect rect, boolean immediate) {
                 return super.requestChildRectangleOnScreen(parent, child, rect, immediate);
             }
         });
+        days.setLayoutManager(new LinearLayoutManager(getContext()));
+        days.setHasFixedSize(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+
+        listday.add(day(0));
+        listday.add(day(1));
+        listday.add(day(2));
+
+        days.setAdapter(new RecylerDayAdapter(getActivity(), listday));
 
         new LoadRecycler().execute();
 
