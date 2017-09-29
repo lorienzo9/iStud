@@ -20,6 +20,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     int materia;
     int color;
+
     ArrayList<Homeworks> list = new ArrayList<>();
     public RecyclerViewAdapter(Context context, ArrayList<Homeworks> list){
         this.context = context;

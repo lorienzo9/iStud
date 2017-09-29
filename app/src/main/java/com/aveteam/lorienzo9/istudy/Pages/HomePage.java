@@ -1,15 +1,12 @@
 package com.aveteam.lorienzo9.istudy.Pages;
 
-import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +16,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.aveteam.lorienzo9.istudy.AppController;
+import com.aveteam.lorienzo9.istudy.Constructors.Days;
 import com.aveteam.lorienzo9.istudy.Homeworks;
+import com.aveteam.lorienzo9.istudy.OnItemClickListener;
 import com.aveteam.lorienzo9.istudy.R;
 import com.aveteam.lorienzo9.istudy.RecyclerViewAdapter;
 import com.aveteam.lorienzo9.istudy.RecylerDayAdapter;
@@ -42,8 +41,10 @@ public class HomePage extends Fragment{
     int datetry;
     RecyclerViewAdapter adapter;
     RecyclerView days;
-    ArrayList<String> listday = new ArrayList<>();
+    ArrayList<Days> listday = new ArrayList<>();
     private ArrayList<Homeworks> list = new ArrayList<>();
+    private Toolbar toolbar;
+    RecylerDayAdapter adapterday;
 
     final static String URL = "http://aveteamdev.altervista.org/AveProject/exercise.json";
     @Nullable
@@ -51,29 +52,37 @@ public class HomePage extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_collappsed_3days, container, false);
 
-
         /*calendarView = (CalendarView) view.findViewById(R.id.calendar);
         calendarView.setFirstDayOfWeek(2);*/
 
         adapter = new RecyclerViewAdapter(getContext(), list);
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_collapsed);
         days = (RecyclerView)view.findViewById(R.id.recycler3days);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()){
-            @Override
-            public boolean requestChildRectangleOnScreen(RecyclerView parent, View child, Rect rect, boolean immediate) {
-                return super.requestChildRectangleOnScreen(parent, child, rect, immediate);
-            }
-        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         days.setLayoutManager(new LinearLayoutManager(getContext()));
         days.setHasFixedSize(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-        listday.add(day(0));
-        listday.add(day(1));
-        listday.add(day(2));
+        listday.add(new Days(day(0), true));
+        listday.add(new Days(day(1), false));
+        listday.add(new Days(day(2), false));
+        adapterday  = new RecylerDayAdapter(getActivity(), listday);
+        days.setAdapter(adapterday);
+        days.addOnItemTouchListener(new OnItemClickListener(getContext(), days, new OnItemClickListener.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                deselectList();
+                listday.get(position).setSelected(true);
+                adapterday.notifyDataSetChanged();
+                //Aggiungere stringa da cui recuperare i file
+            }
 
-        days.setAdapter(new RecylerDayAdapter(getActivity(), listday));
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+        }));
 
         new LoadRecycler().execute();
 
@@ -120,7 +129,6 @@ public class HomePage extends Fragment{
         protected void onPreExecute() {
             super.onPreExecute();
         }
-
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
@@ -136,5 +144,10 @@ public class HomePage extends Fragment{
             fetchRecycler();
             return "Done";
         }
+    }
+    public void deselectList(){
+        listday.get(0).setSelected(false);
+        listday.get(1).setSelected(false);
+        listday.get(2).setSelected(false);
     }
 }

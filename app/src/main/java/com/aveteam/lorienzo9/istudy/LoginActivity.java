@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     String email, password;
     private SharedPreferences sharedPreferences;
     final static String prefEmail = "prefEmail";
+    final static String pass = "prefpassword";
     private Typeface typeface;
 
     @Override
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(readSharedPreferences()!=null){ //Verifico SP
             emailText.setText(readSharedPreferences());
+            passwordText.setText(readPAsswordCache());
         }else{ //Molto opzionale
             Toast.makeText(getApplicationContext(), "Inserisci le tue credenziali", Toast.LENGTH_LONG).show();
         }
@@ -55,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 authenicate();
                 if (readSharedPreferences()==null){
                     WriteStringPreferences(email);
+                    WriteStringPrefPAssword(password);
                 }
             }
         });
@@ -65,12 +68,22 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(prefEmail, MODE_PRIVATE);
         return sharedPreferences.getString("email", null);
     }
+    public String readPAsswordCache(){
+        sharedPreferences = getSharedPreferences(pass, MODE_PRIVATE);
+        return sharedPreferences.getString("password", null);
+    }
 
 
     public void WriteStringPreferences(String email){ //Scrive le SP con tag prefEmail aggiungendo al string "email"
         sharedPreferences = getSharedPreferences(prefEmail, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("email", email);
+        editor.commit();
+    }
+    public void WriteStringPrefPAssword (String password){
+        sharedPreferences = getSharedPreferences(prefEmail, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("password", password);
         editor.commit();
     }
 

@@ -1,11 +1,15 @@
 package com.aveteam.lorienzo9.istudy;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.aveteam.lorienzo9.istudy.Constructors.Days;
 
 import java.util.ArrayList;
 
@@ -16,8 +20,8 @@ import java.util.ArrayList;
 public class RecylerDayAdapter extends RecyclerView.Adapter<RecylerDayAdapter.ViewHolderDays> {
 
     Context context;
-    ArrayList<String> list;
-    public RecylerDayAdapter(Context c, ArrayList<String> arrayList){
+    ArrayList<Days> list;
+    public RecylerDayAdapter(Context c, ArrayList<Days> arrayList){
         this.list = arrayList;
         this.context = c;
     }
@@ -28,7 +32,7 @@ public class RecylerDayAdapter extends RecyclerView.Adapter<RecylerDayAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolderDays holder, int position) {
-        holder.day.setText(list.get(position));
+        holder.day.setText(list.get(position).getDay());
     }
 
     @Override
@@ -39,10 +43,18 @@ public class RecylerDayAdapter extends RecyclerView.Adapter<RecylerDayAdapter.Vi
 
     public class ViewHolderDays extends RecyclerView.ViewHolder{
         TextView day;
+        ConstraintLayout layout;
 
         public ViewHolderDays(View view){
             super(view);
+            layout = (ConstraintLayout)view.findViewById(R.id.layout);
             day = (TextView)view.findViewById(R.id.day_text);
+            day.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    layout.setSelected(true);
+                }
+            });
         }
 
     }
