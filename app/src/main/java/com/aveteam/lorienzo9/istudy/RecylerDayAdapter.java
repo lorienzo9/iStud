@@ -52,7 +52,12 @@ public class RecylerDayAdapter extends RecyclerView.Adapter<RecylerDayAdapter.Vi
             day.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    layout.setSelected(true);
+                    if (layout.isSelected()==true){
+                        layout.setSelected(false);
+                    }else{
+                        layout.setSelected(true);
+                    }
+
                 }
             });
         }

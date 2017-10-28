@@ -69,6 +69,7 @@ public class HomePage extends Fragment{
         listday.add(new Days(day(2), false));
         adapterday  = new RecylerDayAdapter(getActivity(), listday);
         days.setAdapter(adapterday);
+        days.getChildAt(0).setSelected(true);
         days.addOnItemTouchListener(new OnItemClickListener(getContext(), days, new OnItemClickListener.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

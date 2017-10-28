@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     final static String prefEmail = "prefEmail";
     final static String pass = "prefpassword";
     private Typeface typeface;
+    private Button signup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +41,13 @@ public class LoginActivity extends AppCompatActivity {
 
         emailText = (EditText)findViewById(R.id.editText);
         passwordText = (EditText)findViewById(R.id.editText3);
+        signup = (Button)findViewById(R.id.sign_up);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+            }
+        });
         login = (Button)findViewById(R.id.button2);
 
 
