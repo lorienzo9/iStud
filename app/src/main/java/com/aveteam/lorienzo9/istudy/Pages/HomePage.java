@@ -52,8 +52,6 @@ public class HomePage extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_collappsed_3days, container, false);
 
-        /*calendarView = (CalendarView) view.findViewById(R.id.calendar);
-        calendarView.setFirstDayOfWeek(2);*/
 
         adapter = new RecyclerViewAdapter(getContext(), list);
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_collapsed);
@@ -64,17 +62,15 @@ public class HomePage extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-        listday.add(new Days(day(0), true));
-        listday.add(new Days(day(1), false));
-        listday.add(new Days(day(2), false));
+        listday.add(new Days(day(0), true, R.color.colorAccent));
+        listday.add(new Days(day(1), false, R.color.colorPrimary));
+        listday.add(new Days(day(2), false, R.color.colorPrimary));
         adapterday  = new RecylerDayAdapter(getActivity(), listday);
         days.setAdapter(adapterday);
-        days.getChildAt(0).setSelected(true);
         days.addOnItemTouchListener(new OnItemClickListener(getContext(), days, new OnItemClickListener.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                deselectList();
-                listday.get(position).setSelected(true);
+
                 adapterday.notifyDataSetChanged();
                 //Aggiungere stringa da cui recuperare i file
             }

@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         emailText = (EditText)findViewById(R.id.editText);
         passwordText = (EditText)findViewById(R.id.editText3);
-        signup = (Button)findViewById(R.id.sign_up);
+        signup = (Button)findViewById(R.id.btnLinkToRegisterScreen);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

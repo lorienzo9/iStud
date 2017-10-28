@@ -23,8 +23,9 @@
             android:layout_marginTop="56dp"
             android:layout_width="match_parent"
             android:layout_height="168dp"
-            android:theme="@style/Theme.AppCompat"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"></android.support.v7.widget.RecyclerView>
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+        </android.support.v7.widget.RecyclerView>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView

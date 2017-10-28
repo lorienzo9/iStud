@@ -1,6 +1,7 @@
 package com.aveteam.lorienzo9.istudy;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 public class RecylerDayAdapter extends RecyclerView.Adapter<RecylerDayAdapter.ViewHolderDays> {
 
+    int selectedposition;
     Context context;
     ArrayList<Days> list;
     public RecylerDayAdapter(Context c, ArrayList<Days> arrayList){
@@ -49,17 +51,6 @@ public class RecylerDayAdapter extends RecyclerView.Adapter<RecylerDayAdapter.Vi
             super(view);
             layout = (ConstraintLayout)view.findViewById(R.id.layout);
             day = (TextView)view.findViewById(R.id.day_text);
-            day.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (layout.isSelected()==true){
-                        layout.setSelected(false);
-                    }else{
-                        layout.setSelected(true);
-                    }
-
-                }
-            });
         }
 
     }

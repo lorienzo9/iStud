@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity{
            case R.id.logout: logOut();
                return true;
        }
-       return super.onOptionsItemSelected(item);
+       return true;
     }
     public void logOut(){
         builder = new AlertDialog.Builder(getApplicationContext());
