@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.aveteam.lorienzo9.istudy.Pages.Chat;
 import com.aveteam.lorienzo9.istudy.Pages.HomePage;
 import com.aveteam.lorienzo9.istudy.Pages.MainFragment;
 import com.aveteam.lorienzo9.istudy.Pages.ToDo;
@@ -23,7 +24,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position){
-            case 0: return new HomePage();
+            case 0: return new Chat();
             case 1: return new HomePage();
             case 2: return new HomePage();
         }

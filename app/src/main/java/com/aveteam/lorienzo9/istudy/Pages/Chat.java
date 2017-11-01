@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +54,12 @@ public class Chat extends Fragment {
 
         //Bisogna usare un altro constructor!!!!!!!
 
+        //Inizializzo la RecyclerView
+        recyclerView = (RecyclerView)view.findViewById(R.id.list_of_messages);
+        recyclerView.setHasFixedSize(true);
+        adapterChat = new AdapterChat(userID, getContext(), userses);
+        recyclerView.setAdapter(adapterChat);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -83,11 +90,6 @@ public class Chat extends Fragment {
         input_text = (EditText)text_layou.findViewById(R.id.input);
         fab = (FloatingActionButton)view.findViewById(R.id.fab);
 
-        //Inizializzo la RecyclerView
-        recyclerView = (RecyclerView)view.findViewById(R.id.list_of_messages);
-        recyclerView.setHasFixedSize(true);
-        adapterChat = new AdapterChat(userID, getContext(), userses);
-        recyclerView.setAdapter(adapterChat);
 
 
         fab.setOnClickListener(new View.OnClickListener() {

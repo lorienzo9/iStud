@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.aveteam.lorienzo9.istudy.Constructors.Chat;
 import com.aveteam.lorienzo9.istudy.Constructors.Users;
@@ -29,7 +30,8 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolderChat
 
     @Override
     public void onBindViewHolder(ViewHolderChat holder, int position) {
-
+        holder.text.setText(list.get(position).getText());
+        holder.name.setText(list.get(position).getUser());
     }
 
     @Override
@@ -58,8 +60,11 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolderChat
     }
 
     public class ViewHolderChat extends RecyclerView.ViewHolder{
+        TextView text, name;
         public ViewHolderChat(View view){
             super(view);
+            text = (TextView)view.findViewById(R.id.text_chat);
+            name = (TextView)view.findViewById(R.id.name_surname);
         }
     }
 }
