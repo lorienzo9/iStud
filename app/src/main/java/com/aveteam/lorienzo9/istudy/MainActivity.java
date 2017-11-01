@@ -1,21 +1,30 @@
 package com.aveteam.lorienzo9.istudy;
 
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.aveteam.lorienzo9.istudy.Constructors.Users;
 import com.aveteam.lorienzo9.istudy.Pages.HomePage;
 import com.aveteam.lorienzo9.istudy.ViewPagerAdapters.ViewPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
 
@@ -30,6 +39,13 @@ public class MainActivity extends AppCompatActivity{
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
     FirebaseAuth firebaseAuth;
+    DatabaseReference mRef;
+    FirebaseDatabase mFirebaseDatabase;
+    FirebaseAuth.AuthStateListener mAuthListener;
+    String TAG = "authListener";
+    FirebaseUser user;
+    String userID;
+    Users users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +54,48 @@ public class MainActivity extends AppCompatActivity{
         View view = findViewById(R.id.big_appbar);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        mRef = mFirebaseDatabase.getInstance().getReference();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+
+        //mRef.child("users").child(userID).setValue("prova");
+
+
+        // Read from the database
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                Object value = dataSnapshot.getValue();
+                Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+        user = firebaseAuth.getCurrentUser();
+        userID = user.toString();
+        users = new Users(userID);
+        mRef.child("users").setValue(users);
+
 
         setSupportActionBar(toolbar);
 
@@ -94,8 +152,9 @@ public class MainActivity extends AppCompatActivity{
        }
        return true;
     }
+
     public void logOut(){
-        builder = new AlertDialog.Builder(getApplicationContext());
+        builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Desideri uscire?");
         builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
@@ -108,10 +167,9 @@ public class MainActivity extends AppCompatActivity{
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
             }
         });
-        builder.create();
+        builder.show();
     }
 
     @Override

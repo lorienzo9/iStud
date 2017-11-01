@@ -20,6 +20,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by lorienzo9 on 28/10/17.
@@ -31,11 +34,39 @@ public class SignUpActivity extends Activity {
     FirebaseAuth firebaseAuth;
     String email, password;
     AlertDialog.Builder builder;
+    FirebaseDatabase mFirebaseDatabase;
+    DatabaseReference mRef;
+    String userID;
+    String TAG = "message";
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_layout);
         firebaseAuth = FirebaseAuth.getInstance(); //Inizializzo Firebase
+
+        mRef = mFirebaseDatabase.getInstance().getReference();
+        /*mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = mFirebaseDatabase.getReference();
+        */
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+
 
         emailText = (EditText)findViewById(R.id.email_up);
         passwordText = (EditText)findViewById(R.id.password_up);
@@ -57,6 +88,7 @@ public class SignUpActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 createAccount();
+                //mRef.child("users").setValue(userID);
             }
         });
         builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
@@ -75,7 +107,10 @@ public class SignUpActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                 } else {
                     verify();
-                    finish();
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    userID = user.toString();
+                    addUserInfoinDatabase("gruppo_prova"); //Aggiungi un editText da cui atingere il valore
+                    //finish();
                 }
             }
         });
@@ -84,7 +119,7 @@ public class SignUpActivity extends Activity {
     public void verify(){
         final FirebaseUser user = firebaseAuth.getCurrentUser();
         user.sendEmailVerification()
-                .addOnCompleteListener(this, new OnCompleteListener() {
+                .addOnCompleteListener(this, new OnCompleteListener(){
                     @Override
                     public void onComplete(@NonNull Task task) {
                         // Re-enable button
@@ -94,7 +129,6 @@ public class SignUpActivity extends Activity {
                             Toast.makeText(SignUpActivity.this,
                                     "Verification email sent to " + user.getEmail(),
                                     Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                         } else {
                             Log.e("exc", "sendEmailVerification", task.getException());
                             Toast.makeText(SignUpActivity.this,
@@ -103,5 +137,23 @@ public class SignUpActivity extends Activity {
                         }
                     }
                 });
+    }
+    public void addUserInfoinDatabase(String groupId){
+        mRef.setValue("users");
+        mRef.child("user").setValue(userID);
+        mRef.child("users").child(userID).setValue(groupId); //Meglio creare un constructro che aggiunga dati
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            firebaseAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 }
