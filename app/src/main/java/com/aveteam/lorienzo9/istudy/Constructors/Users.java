@@ -11,12 +11,15 @@ public class Users {
     String groupId;
     public Users(){
     }
-    public Users (String grouId){
-        this.groupId = grouId;
+    public Users (String groupId){
+        this.groupId = groupId;
     }
 
     public String getGroupId() {
         return groupId;
     }
 
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
 }

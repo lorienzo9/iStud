@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aveteam.lorienzo9.istudy.Constructors.Chat;
 import com.aveteam.lorienzo9.istudy.Constructors.Users;
 
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolderChat
     int USER = 69;
     String userID;
     Context context;
-    ArrayList<Users> list;
+    ArrayList<Chat> list;
 
-    public AdapterChat(String userID, Context context, ArrayList<Users> list){
-        this.list =list;
+    public AdapterChat(String userID, Context context, ArrayList<Chat> list){
+        this.list = list;
         this. userID = userID;
         this.context = context;
     }
@@ -49,7 +50,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolderChat
 
     @Override
     public int getItemViewType(int position) {
-        if (list.get(position).getGroupId().equals(userID)){
+        if (list.get(position).getUser().equals(userID)){
             return USER;
         }else {
          return 0;
