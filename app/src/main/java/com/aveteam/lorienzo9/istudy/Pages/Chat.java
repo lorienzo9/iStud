@@ -65,10 +65,11 @@ public class Chat extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
-                    for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    for (int i = 0; i < dataSnapshot.getChildrenCount(); i++){
+                    //for (DataSnapshot ds: dataSnapshot.getChildren()){
                         com.aveteam.lorienzo9.istudy.Constructors.Chat chatConstructor = new com.aveteam.lorienzo9.istudy.Constructors.Chat();
-                        chatConstructor.setText(ds.child("groups").child(userID).getValue(com.aveteam.lorienzo9.istudy.Constructors.Chat.class).getText());
-                        chatConstructor.setUser(ds.child("groups").child(userID).getValue(com.aveteam.lorienzo9.istudy.Constructors.Chat.class).getUser());
+                        chatConstructor.setText(dataSnapshot.child("groups").child("Gruppo1").child(String.valueOf(i)).getValue(com.aveteam.lorienzo9.istudy.Constructors.Chat.class).getText());
+                        chatConstructor.setUser(dataSnapshot.child("groups").child("Gruppo1").child(String.valueOf(i)).getValue(com.aveteam.lorienzo9.istudy.Constructors.Chat.class).getUser());
 
                         userses.add(new com.aveteam.lorienzo9.istudy.Constructors.Chat(chatConstructor.getUser(), chatConstructor.getText()));
                         adapterChat.notifyDataSetChanged();
