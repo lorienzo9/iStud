@@ -1,6 +1,7 @@
 package com.aveteam.lorienzo9.istudy;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.aveteam.lorienzo9.istudy.Constructors.User;
 import com.aveteam.lorienzo9.istudy.Constructors.Users;
 import com.aveteam.lorienzo9.istudy.Pages.HomePage;
 import com.aveteam.lorienzo9.istudy.ViewPagerAdapters.ViewPagerAdapter;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity{
     FirebaseUser user;
     String userID;
     Users users;
+    public static String USER_ID;
+    public static String user_nickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity{
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        mRef = mFirebaseDatabase.getInstance().getReference();
+        mRef = mFirebaseDatabase.getInstance().getReference().child("users");
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -71,6 +75,9 @@ public class MainActivity extends AppCompatActivity{
             }
         };
 
+        Intent intent = getIntent();
+        USER_ID = intent.getStringExtra("user");
+
         //mRef.child("users").child(userID).setValue("prova");
 
 
@@ -80,8 +87,8 @@ public class MainActivity extends AppCompatActivity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                Object value = dataSnapshot.getValue();
-                Log.d(TAG, "Value is: " + value);
+
+                Log.d(TAG, "Value is: " );
             }
 
             @Override
@@ -94,7 +101,7 @@ public class MainActivity extends AppCompatActivity{
         user = firebaseAuth.getCurrentUser();
         userID = user.toString();
         users = new Users(userID);
-        mRef.child("users").setValue(users);
+        //mRef.child("users").setValue(users);
 
 
         setSupportActionBar(toolbar);

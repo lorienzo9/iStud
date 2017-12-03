@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.aveteam.lorienzo9.istudy.Constructors.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -107,14 +108,14 @@ public class SignUpActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                 } else {
                     verify();
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    userID = user.toString();
-                    addUserInfoinDatabase("gruppo_prova"); //Aggiungi un editText da cui atingere il valore
+                    //addUserInfoinDatabase("lorienzo9"); //Aggiungi un editText da cui atingere il valore
                     //finish();
                 }
             }
         });
-
+        //potrei creare qui un nuovo utente, oppure creare un costructor User
+        User user = new User("lorienzo9", "Gruppo1", email);
+        mRef.child("uesrs").child(email).setValue(user);
     }
     public void verify(){
         final FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -139,9 +140,7 @@ public class SignUpActivity extends Activity {
                 });
     }
     public void addUserInfoinDatabase(String groupId){
-        mRef.setValue("users");
-        mRef.child("user").setValue(userID);
-        mRef.child("users").child(userID).setValue(groupId); //Meglio creare un constructro che aggiunga dati
+        mRef.child("users").setValue(groupId); //Meglio creare un constructor che aggiunga dati
     }
     @Override
     public void onStart() {

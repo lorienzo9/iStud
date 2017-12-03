@@ -47,12 +47,11 @@ import java.util.HashMap;
  */
 
 public class HomePage extends Fragment{
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, days;
     private CalendarView calendarView;
     Calendar date;
     int datetry;
     RecyclerViewAdapter adapter;
-    RecyclerView days;
     ArrayList<Days> listday = new ArrayList<>();
     private ArrayList<Homeworks> list = new ArrayList<>();
     private Toolbar toolbar;
@@ -65,8 +64,6 @@ public class HomePage extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_collappsed_3days, container, false);
-
-
 
 
 
