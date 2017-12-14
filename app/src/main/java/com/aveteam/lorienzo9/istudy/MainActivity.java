@@ -32,6 +32,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity{
     private Date date;
+    private final int NUMBER_OF_TABS = 5;
     private TextView numberdate;
     private ViewPager viewpager;
     private TabLayout tabLayout;
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity{
 
         viewpager = (ViewPager)findViewById(R.id.horizontal_viewpager);
 
-        viewpager.setAdapter(new ViewPagerAdapter(3, getSupportFragmentManager()));
+        viewpager.setAdapter(new ViewPagerAdapter(NUMBER_OF_TABS, getSupportFragmentManager()));
         viewpager.setCurrentItem(0);
         viewpager.setCurrentItem(1);
 
@@ -119,9 +120,11 @@ public class MainActivity extends AppCompatActivity{
         main = tabLayout.newTab().setIcon(R.drawable.ic_home_black_24dp);
         other = tabLayout.newTab().setIcon(R.drawable.ic_public_black_24dp);
 
-        tabLayout.addTab(chat, 0);
-        tabLayout.addTab(main, 1);
-        tabLayout.addTab(other, 2);
+        tabLayout.addTab(chat, 1);
+        tabLayout.addTab(main, 3);
+        tabLayout.addTab(other, 0); //Blog
+        tabLayout.addTab(profile, 4);
+        tabLayout.addTab(add, 2);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

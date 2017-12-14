@@ -37,7 +37,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolderChat
     @Override
     public ViewHolderChat onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if (viewType == USER){ //Layout Self message
+        if (USER == 69){ //Layout Self message
             view = LayoutInflater.from(context).inflate(R.layout.chat_message, parent, false);
         }else {
             view = LayoutInflater.from(context).inflate(R.layout.chat_message_user, parent, false);
@@ -56,7 +56,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolderChat
             USER=69;
         }
         else {
-            return 0;
+            USER = 0;
         }
         return USER;
     }

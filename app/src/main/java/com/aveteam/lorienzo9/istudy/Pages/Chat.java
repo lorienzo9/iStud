@@ -65,9 +65,6 @@ public class Chat extends Fragment {
         //getUserInformation();
 
 
-
-
-
         recyclerView = (RecyclerView)view.findViewById(R.id.list_of_messages);
         input_text = (EditText)view.findViewById(R.id.input);
         fab = (FloatingActionButton)view.findViewById(R.id.fab);
@@ -113,15 +110,12 @@ public class Chat extends Fragment {
 
 
 
-
-
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String text = input_text.getText().toString();
                 input_text.setText("");
-                mRef.child(String.valueOf(ID_NUMBER)).setValue(new com.aveteam.lorienzo9.istudy.Constructors.Chat(user_nick, text));
+                mRef.child(String.valueOf(ID_NUMBER)).setValue(new com.aveteam.lorienzo9.istudy.Constructors.Chat("lorienzo9", text));
 
             }
         });

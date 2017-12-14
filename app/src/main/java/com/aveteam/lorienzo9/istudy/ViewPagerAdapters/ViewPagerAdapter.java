@@ -23,9 +23,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position){
-            case 0: return new Chat(); //sistemare Chat()
-            case 1: return new HomePage();
-            case 2: return new BlogPage();
+            case 0: return new BlogPage();
+            case 1: return new Chat();
+            case 2: return new BlogPage(); //AddPost
+            case 3: return new HomePage();
+            case 4: return new BlogPage(); //Profile
         }
         return null;
     }
