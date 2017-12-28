@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aveteam.lorienzo9.istudy.Constructors.Homework;
+
 import java.util.ArrayList;
 
 /**
@@ -21,16 +23,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     int materia;
     int color;
 
-    ArrayList<Homeworks> list = new ArrayList<>();
-    public RecyclerViewAdapter(Context context, ArrayList<Homeworks> list){
+    ArrayList<Homework> list = new ArrayList<>();
+    public RecyclerViewAdapter(Context context, ArrayList<Homework> list){
         this.context = context;
         this.list = list;
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.descrizione.setText(list.get(position).getDescrizione());
-        holder.titolo.setText(list.get(position).getTitolo());
-        materia = list.get(position).getTAG();
+        holder.descrizione.setText(list.get(position).getContent());
+        holder.titolo.setText(list.get(position).getTitle());
+        materia = list.get(position).getTag();
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.aveteam.lorienzo9.istudy.Pages.AddPost;
 import com.aveteam.lorienzo9.istudy.Pages.BlogPage;
 import com.aveteam.lorienzo9.istudy.Pages.Chat;
 import com.aveteam.lorienzo9.istudy.Pages.HomePage;
@@ -25,7 +26,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         switch (position){
             case 0: return new BlogPage();
             case 1: return new Chat();
-            case 2: return new BlogPage(); //AddPost
+            case 2: return new AddPost();
             case 3: return new HomePage();
             case 4: return new BlogPage(); //Profile
         }

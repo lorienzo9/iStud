@@ -24,9 +24,9 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/email_up" />
+        app:layout_constraintBottom_toTopOf="@+id/email_signup" />
     <EditText
-        android:id="@+id/email_up"
+        android:id="@+id/email_signup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Email"
@@ -61,10 +61,10 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="162dp"
-        app:layout_constraintBottom_toTopOf="@+id/sign_up" />
+        app:layout_constraintBottom_toTopOf="@+id/next" />
 
     <Button
-        android:id="@+id/sign_up"
+        android:id="@+id/next"
         style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="0dp"
         android:layout_height="48dp"

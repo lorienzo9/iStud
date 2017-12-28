@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.aveteam.lorienzo9.istudy.Constructors.Blog;
 import com.aveteam.lorienzo9.istudy.Constructors.User;
 import com.aveteam.lorienzo9.istudy.Constructors.Users;
 import com.aveteam.lorienzo9.istudy.Pages.HomePage;
@@ -49,8 +50,9 @@ public class MainActivity extends AppCompatActivity{
     FirebaseUser user;
     String userID;
     Users users;
-    public static String USER_ID;
+    public String USER_ID = "lorienzo9";
     public static String user_nickname;
+    String ID_NICKNAME = new LoginActivity().readSharedPreferences();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +85,11 @@ public class MainActivity extends AppCompatActivity{
 
 
         // Read from the database
-        mRef.addValueEventListener(new ValueEventListener() {
+        mRef.child(ID_NICKNAME).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-
                 Log.d(TAG, "Value is: " );
             }
 
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity{
         viewpager = (ViewPager)findViewById(R.id.horizontal_viewpager);
 
         viewpager.setAdapter(new ViewPagerAdapter(NUMBER_OF_TABS, getSupportFragmentManager()));
-        viewpager.setCurrentItem(0);
+        //viewpager.setCurrentItem(0);
         viewpager.setCurrentItem(1);
 
         tabLayout = (TabLayout)findViewById(R.id.tab);
@@ -120,11 +121,14 @@ public class MainActivity extends AppCompatActivity{
         main = tabLayout.newTab().setIcon(R.drawable.ic_home_black_24dp);
         other = tabLayout.newTab().setIcon(R.drawable.ic_public_black_24dp);
 
+
+        tabLayout.addTab(other, 0);
         tabLayout.addTab(chat, 1);
-        tabLayout.addTab(main, 3);
-        tabLayout.addTab(other, 0); //Blog
-        tabLayout.addTab(profile, 4);
         tabLayout.addTab(add, 2);
+        tabLayout.addTab(main, 3);
+         //Blog
+        tabLayout.addTab(profile, 4);
+
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

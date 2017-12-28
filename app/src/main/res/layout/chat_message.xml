@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp">
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:singleLine="true"
-        android:gravity="bottom"
-        android:textColor="@color/cardview_light_background"
-        android:paddingLeft="16dp"
         android:id="@+id/name_surname"
-        android:layout_alignRight="@+id/text_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="bottom"
+        android:singleLine="true"
         android:text="Lorenzo Zanet"
-        android:background="@drawable/box_message"
-        android:backgroundTint="@color/colorPrimary"/>
+        android:textColor="@color/colorPrimary" />
+
     <TextView
         android:id="@+id/text_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:background="@drawable/box_text"
-        android:padding="16dp"
-        android:text="Android charting application xml ui design. Android charting application xml ui design tutorial with example. Android charting application xml ui design. Android charting application xml ui design. "
-        android:textColor="@color/cardview_light_background"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/name_surname"
-        android:layout_alignParentStart="true"
-        android:backgroundTint="@color/colorPrimary"/>
+        android:layout_marginTop="6dp"
+        android:layout_weight="2"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/box_message"
+        android:padding="16dp"
+        android:text="Ciaaaaoooooooooooooooo"
+        android:textColor="@color/cardview_light_background" />
 
 </RelativeLayout>

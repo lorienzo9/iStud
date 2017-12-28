@@ -52,7 +52,7 @@ public class Chat extends Fragment {
     final static String TAG = Chat.class.getSimpleName();
     String GRUPPO;
     int ID_NUMBER;
-    final String USER_ID = new MainActivity().USER_ID;
+    String USER = new MainActivity().USER_ID;
     String user_nick;
     @Nullable
     @Override
@@ -61,7 +61,7 @@ public class Chat extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        mRef = firebaseDatabase.getReference().child("groups").child("Gruppo1");
+        mRef = firebaseDatabase.getReference().child("Groups").child("1").child("Chat");
         //getUserInformation();
 
 
@@ -73,7 +73,7 @@ public class Chat extends Fragment {
         //Inizializzo la RecyclerView
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapterChat = new AdapterChat("lorienzo9", getActivity(), userses); //Modifica userID
+        adapterChat = new AdapterChat(USER, getActivity(), userses); //Modifica userID
         recyclerView.setAdapter(adapterChat);
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -137,7 +137,7 @@ public class Chat extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.child(USER_ID).getValue(User.class);
+                User user = dataSnapshot.child(USER).getValue(User.class);
                 //user_nick = user.getName();
             }
 

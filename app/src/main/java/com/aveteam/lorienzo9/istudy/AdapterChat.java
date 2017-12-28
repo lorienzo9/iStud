@@ -37,10 +37,12 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolderChat
     @Override
     public ViewHolderChat onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if (USER == 69){ //Layout Self message
-            view = LayoutInflater.from(context).inflate(R.layout.chat_message, parent, false);
+        if (viewType == 69){ //Layout Self message
+            view = LayoutInflater.from(context).inflate(R.layout.chat_message, null);
+
         }else {
-            view = LayoutInflater.from(context).inflate(R.layout.chat_message_user, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.chat_message_user, null);
+
         }
         return new ViewHolderChat(view);
     }
@@ -53,12 +55,9 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.ViewHolderChat
     @Override
     public int getItemViewType(int position) {
         if (list.get(position).getUser()==userID){ //con .equals() non funziona, lascia ==
-            USER=69;
+            return 69;
         }
-        else {
-            USER = 0;
-        }
-        return USER;
+        return position;
     }
 
     public class ViewHolderChat extends RecyclerView.ViewHolder{

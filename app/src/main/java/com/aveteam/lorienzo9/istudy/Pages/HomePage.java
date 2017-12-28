@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.aveteam.lorienzo9.istudy.AppController;
 import com.aveteam.lorienzo9.istudy.Constructors.Days;
+import com.aveteam.lorienzo9.istudy.Constructors.Homework;
 import com.aveteam.lorienzo9.istudy.Homeworks;
 import com.aveteam.lorienzo9.istudy.OnItemClickListener;
 import com.aveteam.lorienzo9.istudy.R;
@@ -26,6 +27,12 @@ import com.aveteam.lorienzo9.istudy.RecyclerViewAdapter;
 import com.aveteam.lorienzo9.istudy.RecylerDayAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -53,11 +60,16 @@ public class HomePage extends Fragment{
     int datetry;
     RecyclerViewAdapter adapter;
     ArrayList<Days> listday = new ArrayList<>();
-    private ArrayList<Homeworks> list = new ArrayList<>();
+    private ArrayList<Homework> list = new ArrayList<>();
     private Toolbar toolbar;
     RecylerDayAdapter adapterday;
     private StorageReference storageReference;
     private File localFile;
+    FirebaseDatabase firebaseDatabase;
+    FirebaseAuth firebaseAuth;
+    DatabaseReference mRef;
+    final static String TAG = Homeworks.class.getSimpleName();
+    int ID_NUMBER;
 
     final static String URL = "http://aveteamdev.altervista.org/AveProject/exercise.json";
     @Nullable
@@ -69,6 +81,10 @@ public class HomePage extends Fragment{
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        mRef = firebaseDatabase.getReference().child("Groups").child("1").child("HomeWork");
 
 
         adapter = new RecyclerViewAdapter(getContext(), list);
@@ -99,7 +115,37 @@ public class HomePage extends Fragment{
             }
         }));
 
-        new LoadRecycler().execute();
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                try {
+                    list.clear();
+                    int i = 0;
+                    //for (int i = 0; i < dataSnapshot.getChildrenCount(); i++){
+                    for (DataSnapshot ds: dataSnapshot.getChildren()){
+                        Homework chatConstructor = new Homework();
+                        chatConstructor.setContent(dataSnapshot.child(String.valueOf(i)).getValue(Homework.class).getContent());
+                        chatConstructor.setTitle(dataSnapshot.child(String.valueOf(i)).getValue(Homework.class).getTitle());
+                        chatConstructor.setTag(dataSnapshot.child(String.valueOf(i)).getValue(Homework.class).getTag());
+
+                        list.add(new Homework(chatConstructor.getTitle(), chatConstructor.getContent(), chatConstructor.getTag(), chatConstructor.getClasse(), chatConstructor.getAssegnato(), chatConstructor.getScadenza()));
+                        adapter.notifyDataSetChanged();
+                        recyclerView.scrollToPosition(list.size()-1); //Da verificare
+                        i++;
+                        ID_NUMBER = i;
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+        //new LoadRecycler().execute();
 
         return view;
     }
@@ -109,7 +155,7 @@ public class HomePage extends Fragment{
         datetry = date.get(Calendar.DATE);
         return String.valueOf(datetry)+" / "+String.valueOf(date.get(Calendar.MONTH)+1);
     }
-    public void fetchRecycler(){
+    /*public void fetchRecycler(){
         JsonArrayRequest request = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -220,5 +266,5 @@ public class HomePage extends Fragment{
             } catch (IOException e){
                 e.printStackTrace();
             }
-    }
+    }*/
 }

@@ -1,7 +1,10 @@
 package com.aveteam.lorienzo9.istudy.Pages;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +18,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.aveteam.lorienzo9.istudy.R;
+import com.aveteam.lorienzo9.istudy.Types.Text;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,17 +34,27 @@ import java.util.ArrayList;
 
 public class AddPost extends Fragment {
     ArrayList<String> imageItems = new ArrayList<>();
-    Picasso picasso;
+    int images[] = {
+            R.mipmap.ic_launcher, R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher, R.mipmap.ic_launcher,
+            R.mipmap.ic_launcher, R.mipmap.ic_launcher
+    };
     GridView gridView;
+    StorageReference mRef;
+    FirebaseAuth auth;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_post, container, false); //Manage Layout
+        auth = FirebaseAuth.getInstance();
+        mRef = FirebaseStorage.getInstance().getReference();
         gridView = (GridView)view.findViewById(R.id.grid_post_type);
+
         gridView.setAdapter(new Adapter(getActivity()));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                startActivity(new Intent(getContext(), Text.class));
                 //Avvia activity
             }
         });
@@ -49,7 +68,7 @@ public class AddPost extends Fragment {
         }
         @Override
         public int getCount() {
-            return imageItems.size();
+            return images.length;
         }
 
         @Override
@@ -57,13 +76,13 @@ public class AddPost extends Fragment {
             ImageView imageView;
             if (view == null){
                 imageView = new ImageView(mContext);
-                imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+                imageView.setLayoutParams(new GridView.LayoutParams(250, 250));
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(8, 8, 8, 8);
+                imageView.setPadding(8, 32, 8, 32);
             } else {
                 imageView = (ImageView) view;
             }
-            Picasso.with(mContext).load(imageItems.get(i)).error(R.mipmap.ic_launcher).into(imageView);
+            imageView.setImageResource(images[i]);
             return imageView;
         }
 
@@ -74,7 +93,7 @@ public class AddPost extends Fragment {
 
         @Override
         public Object getItem(int i) {
-            return imageItems.get(i);
+            return images[i];
         }
 
     }

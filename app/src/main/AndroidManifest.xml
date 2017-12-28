@@ -25,6 +25,9 @@
         </activity>
         <activity android:name=".SignUpActivity">
         </activity>
+        <activity android:name=".Types.Text"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
     </application>
 
 </manifest>

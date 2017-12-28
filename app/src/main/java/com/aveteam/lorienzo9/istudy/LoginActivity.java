@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance(); //Inizializzo Firebase
 
 
+
         emailText = (EditText)findViewById(R.id.editText);
         passwordText = (EditText)findViewById(R.id.editText3);
         signup = (Button)findViewById(R.id.btnLinkToRegisterScreen);
@@ -57,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         }else{ //Molto opzionale
             Toast.makeText(getApplicationContext(), "Inserisci le tue credenziali", Toast.LENGTH_LONG).show();
         }
-
 
         login.setOnClickListener(new View.OnClickListener() { //E' il click sul bottone: prima autentica, poi salva le SP
             @Override

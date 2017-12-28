@@ -2,13 +2,9 @@ package com.aveteam.lorienzo9.istudy;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,19 +17,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by lorienzo9 on 28/10/17.
  */
 
 public class SignUpActivity extends Activity {
-    EditText emailText, passwordText;
+    EditText emailText, passwordText, nicknameText;
     Button signup;
     FirebaseAuth firebaseAuth;
-    String email, password;
+    String email, password, nickname;
     AlertDialog.Builder builder;
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mRef;
@@ -48,10 +46,7 @@ public class SignUpActivity extends Activity {
         setContentView(R.layout.sign_up_layout);
         firebaseAuth = FirebaseAuth.getInstance(); //Inizializzo Firebase
 
-        mRef = mFirebaseDatabase.getInstance().getReference();
-        /*mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mRef = mFirebaseDatabase.getReference();
-        */
+        mRef = mFirebaseDatabase.getInstance().getReference().child("Users");
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -69,22 +64,24 @@ public class SignUpActivity extends Activity {
         };
 
 
-        emailText = (EditText)findViewById(R.id.email_up);
+        emailText = (EditText)findViewById(R.id.email_signup);
         passwordText = (EditText)findViewById(R.id.password_up);
-        signup = (Button)findViewById(R.id.sign_up);
+        nicknameText = (EditText)findViewById(R.id.nickname_up);
+        signup = (Button)findViewById(R.id.next);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 email = emailText.getText().toString().trim();
                 password = passwordText.getText().toString().trim();
+                nickname = nicknameText.getText().toString().trim();
                 lunchdialog();
             }
         });
     }
     public void lunchdialog(){
         builder = new AlertDialog.Builder(SignUpActivity.this);
-        builder.setMessage("Do you want to create a new Account? Your email will be '"+email+ "' and your password '"+password+"'");
+        builder.setMessage("Do you want to create a new Account? Your email will be "+email+ ", your password "+password+" and your nickname will be "+nickname);
         builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -107,15 +104,39 @@ public class SignUpActivity extends Activity {
                 if (!task.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
                 } else {
-                    verify();
+                    if (nickname != null){
+                        mRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                try {
+                                    if (dataSnapshot.child(nickname).exists()){
+                                        nickname = "";
+                                    }else {
+                                        //Creo nuovo utente
+                                        mRef.setValue(nickname);
+                                        verify();
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError error) {
+                                // Failed to read value
+                                Log.w("mex", "Failed to read value.", error.toException());
+                            }
+                        });
+                    }
+                    //verify();
                     //addUserInfoinDatabase("lorienzo9"); //Aggiungi un editText da cui atingere il valore
-                    //finish();
+                    //finish();child("uesrs")
                 }
             }
         });
         //potrei creare qui un nuovo utente, oppure creare un costructor User
-        User user = new User("lorienzo9", "Gruppo1", email);
-        mRef.child("uesrs").child(email).setValue(user);
+        User user = new User(nickname, "Gruppo1", email);
+        mRef.child(email).setValue(user);
     }
     public void verify(){
         final FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -124,7 +145,7 @@ public class SignUpActivity extends Activity {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         // Re-enable button
-                        findViewById(R.id.sign_up).setEnabled(true);
+                        findViewById(R.id.next).setEnabled(true);
 
                         if (task.isSuccessful()) {
                             Toast.makeText(SignUpActivity.this,
@@ -138,9 +159,6 @@ public class SignUpActivity extends Activity {
                         }
                     }
                 });
-    }
-    public void addUserInfoinDatabase(String groupId){
-        mRef.child("users").setValue(groupId); //Meglio creare un constructor che aggiunga dati
     }
     @Override
     public void onStart() {

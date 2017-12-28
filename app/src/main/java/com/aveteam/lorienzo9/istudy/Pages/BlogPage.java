@@ -38,12 +38,13 @@ public class BlogPage extends Fragment {
     FloatingActionButton fab;
     DatabaseFirebase db;
     int bloc_post_id;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_room, container, false);  //Layout da sostituire
         firebaseAuth = FirebaseAuth.getInstance();
-        mRef = FirebaseDatabase.getInstance().getReference().child("Gruppo1").child("Blog");
+        mRef = FirebaseDatabase.getInstance().getReference().child("Groups").child("1").child("Blog");
 
         recyclerView = (RecyclerView)view.findViewById(R.id.list_of_messages); //Cambia id
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
